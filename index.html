@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MS Family</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MS Family">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0B1118">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+html,body{margin:0;height:100%;background:#0B1118}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#F6F4EE}
+#msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#F6F4EE;font:600 18px system-ui,sans-serif;z-index:-1}
+</style></head>
+<body>
+<div id="msg">MS Family…</div>
+<script>
+// Link dell'app Google (finisce con /exec). Se lo cambi, aggiornalo qui.
+var APP = 'https://script.google.com/macros/s/AKfycbwjRCTpXmLOEDm2sf1PeDq0i1MQggg_coXLta9Tu22ESdzvMpnj9UPMPZXCdd4nbKDY/exec';
+var me = '';
+try {
+  me = new URLSearchParams(location.search).get('me') || '';
+  if (me) localStorage.setItem('msf_me', me); else me = localStorage.getItem('msf_me') || '';
+} catch (e) {}
+var f = document.createElement('iframe');
+f.src = APP + (me ? '?me=' + encodeURIComponent(me) : '');
+f.setAttribute('allow', 'clipboard-write');
+document.body.appendChild(f);
+</script>
+</body></html>
