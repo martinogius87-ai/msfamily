@@ -6,18 +6,22 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="MS Family">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0B1118">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#F6F4EE" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1623" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <style>
-html,body{margin:0;height:100%;background:#0B1118}
-iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#F6F4EE}
-#msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#F6F4EE;font:600 18px system-ui,sans-serif;z-index:-1}
+html,body{margin:0;height:100%;background:#FFFFFF;overflow:hidden}
+@media (prefers-color-scheme:dark){html,body{background:#182235}}
+iframe{position:fixed;left:0;top:0;width:100%;height:100vh;border:0}
+#probe{position:fixed;left:0;bottom:0;width:1px;height:0;padding-bottom:env(safe-area-inset-bottom);visibility:hidden}
+#msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;color:#888;font:600 18px system-ui,sans-serif;z-index:-1}
 </style></head>
 <body>
 <div id="msg">MS Family…</div>
+<div id="probe"></div>
 <script>
 // Link dell'app Google (finisce con /exec). Se lo cambi, aggiornalo qui.
 var APP = 'https://script.google.com/macros/s/AKfycbwjRCTpXmLOEDm2sf1PeDq0i1MQggg_coXLta9Tu22ESdzvMpnj9UPMPZXCdd4nbKDY/exec';
@@ -30,5 +34,13 @@ var f = document.createElement('iframe');
 f.src = APP + (me ? '?me=' + encodeURIComponent(me) : '');
 f.setAttribute('allow', 'clipboard-write');
 document.body.appendChild(f);
+// l'iframe riempie lo schermo e lascia libero solo lo spazio della barra Home dell'iPhone
+function misura() {
+  var sotto = document.getElementById('probe').offsetHeight || 0;
+  f.style.height = Math.max(200, window.innerHeight - sotto) + 'px';
+}
+misura();
+window.addEventListener('resize', misura);
+window.addEventListener('orientationchange', function () { setTimeout(misura, 300); });
 </script>
 </body></html>
